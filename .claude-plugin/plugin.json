@@ -1,0 +1,26 @@
+{
+  "name": "blender-programmatic-studio",
+  "version": "2.1.0",
+  "description": "Universal AI agent skill for photorealistic Blender 4.2-5.2+ modeling, PBR-to-ORM game asset pipelines (UE5/Unity/Godot/glTF), closed-loop visual QC, and Cycles GPU rendering.",
+  "author": {
+    "name": "Jowitt13",
+    "url": "https://github.com/Jowitt13"
+  },
+  "repository": "https://github.com/Jowitt13/blender-programmatic-studio",
+  "license": "MIT",
+  "keywords": [
+    "blender",
+    "3d",
+    "cycles",
+    "pbr",
+    "game-assets",
+    "unreal-engine",
+    "unity",
+    "godot",
+    "gltf",
+    "photorealism"
+  ],
+  "skills": [
+    "."
+  ]
+}

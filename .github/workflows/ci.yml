@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate SKILL.md frontmatter, relative links & Python syntax
+        run: python tests/run_smoke_test.py --skip-blender
+
+      - name: Verify cross-agent installer (install & uninstall)
+        run: |
+          chmod +x install/install.sh
+          TMP_PROJ="$(mktemp -d)"
+          ./install/install.sh --project "$TMP_PROJ"
+          test -f "$TMP_PROJ/.agents/skills/blender-programmatic-studio/SKILL.md"
+          test -f "$TMP_PROJ/.agents/skills/blender-programmatic-studio/scripts/game_asset_pipeline.py"
+          ./install/install.sh --project "$TMP_PROJ" --uninstall
+          test ! -d "$TMP_PROJ/.agents/skills/blender-programmatic-studio"
+          rm -rf "$TMP_PROJ"

@@ -1,0 +1,19 @@
+{
+  "name": "blender-programmatic-studio",
+  "owner": {
+    "name": "Jowitt13",
+    "url": "https://github.com/Jowitt13"
+  },
+  "metadata": {
+    "description": "Dual-track photorealistic Blender modeling, Cycles GPU cinema look-dev, and UE5/Unity/Godot game-asset production workflow.",
+    "version": "2.1.0"
+  },
+  "plugins": [
+    {
+      "name": "blender-programmatic-studio",
+      "source": ".",
+      "description": "Photorealistic 3D modeling, physical PBR material factory, weather/terrain environments, automated visual QC, metallic-safe PBR-to-ORM baking, LODs, UCX collision, and glTF/FBX/USD export.",
+      "version": "2.1.0"
+    }
+  ]
+}

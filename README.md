@@ -1,6 +1,11 @@
 # Blender Programmatic Studio
 
-**Ultra-detailed photorealistic 3D modeling, physical PBR look-dev, real-time game-ready asset production (UE5 / Unity / Godot / WebGL), and cinema rendering — driven 100% by Python scripts in headless Blender CLI (`4.2 LTS – 5.2+`), engineered for ANY AI agent.**
+[![CI](https://github.com/Jowitt13/blender-programmatic-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Jowitt13/blender-programmatic-studio/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Jowitt13/blender-programmatic-studio)](https://github.com/Jowitt13/blender-programmatic-studio/releases)
+[![Blender](https://img.shields.io/badge/Blender-4.2%20LTS%20%E2%80%93%205.2%2B-E87D0D)](https://www.blender.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
+**Ultra-detailed photorealistic 3D modeling, one-line physical PBR shaders, real-time game-ready asset & environment pipelines (UE5 / Unity / Godot / WebGL), and Cycles GPU cinema rendering — driven 100% by Python scripts in headless Blender CLI, engineered for ANY AI agent.**
 
 [English](./README.md) | [简体中文](./README_zh.md)
 
@@ -10,20 +15,22 @@
 
 ![Workbench Clay vs Cycles RTX Blue-Hour Exact Camera Split](./assets/chiba_clay_vs_cycles_split.jpg)
 
+### Runnable Hard-Surface Game Prop Benchmark (`examples/02_game_hero_prop.py`)
+
+![Armored Industrial Supply Crate — 4-View Clay QC to Cycles PBR + ORM-Bake Ready Prop](./assets/example_02_game_prop_qc.jpg)
+
+> Built purely with `examples/02_game_hero_prop.py` + `scripts/material_library.py` in seconds, verified with `visual_qc_kit.py`, and directly exportable to UE5/Unity/Godot with baked `BaseColor + ORM + Normal + Emissive`, LOD0/1/2, and `UCX_` collision.
+
 ---
 
 ## Dual-Track Closed-Loop Pipeline (Cinema + Real-Time Game Assets)
-
-Most AI-generated Blender scripts fail in predictable ways: sharp 90° toy primitives, floating objects, uniform plastic roughness, black-metal Cycles bakes, unapplied non-unit scales that break UE5/Unity imports, Blender 4.x/5.x API crashes, and blind rendering.
-
-**Blender Programmatic Studio** turns any coding or multimodal AI agent into a disciplined Technical Art Director with **two production tracks sharing one verified geometry & PBR core**:
 
 ```mermaid
 flowchart LR
     A["1. Spec-First Blueprint (1 BU = 1m)"] --> B["2. 3-Tier Geometry (Macro -> Meso -> Micro)"]
     B --> C["3. scene_auditor.py + 3s 4-View Clay QC"]
     C -->|Fix Scale / Bevels / Proportions| B
-    C -->|Geometry Approved| D["4. Anti-Plastic PBR & AgX Look-Dev"]
+    C -->|Geometry Approved| D["4. material_library.py + environment_kit.py"]
     D --> E["5. Cycles + 1:1 Native Crop QC"]
     E -->|5-Axis Self-Critique| D
     E -->|Track A: Cinema / Stills| F["6A. Resumable GPU Render & delivery_audit.py"]
@@ -36,18 +43,20 @@ flowchart LR
 
 Everything runs over **standard headless Blender CLI (`blender -b --factory-startup --python-exit-code 1 --python ...`)** with **zero external dependencies inside Blender's Python** (`bpy` + bundled `numpy`):
 
+**Claude Code Plugin (Native Marketplace)**:
+```text
+/plugin marketplace add Jowitt13/blender-programmatic-studio
+/plugin install blender-programmatic-studio@blender-programmatic-studio
+```
+
+**Any Agent (Antigravity, Claude Code, Codex, OpenCode, Gemini CLI, Copilot, Cursor)**:
 ```bash
 git clone https://github.com/Jowitt13/blender-programmatic-studio
 ./blender-programmatic-studio/install/install.sh         # macOS / Linux
 .\blender-programmatic-studio\install\install.ps1        # Windows PowerShell
 ```
 
-Default installs cleanly into:
-- `~/.gemini/config/skills/blender-programmatic-studio` (**Antigravity**)
-- `~/.claude/skills/blender-programmatic-studio` (**Claude Code**)
-- `~/.agents/skills/blender-programmatic-studio` (**Codex, OpenCode, Gemini CLI, GitHub Copilot, Cursor**)
-
-Options: `--agent antigravity|claude|agents|all`, `--project DIR` for a single repo, `--uninstall`. For **ChatGPT + local terminal, Windsurf, Cline**, or any custom agent, drop [adapters/UNIVERSAL_PROMPT.md](./adapters/UNIVERSAL_PROMPT.md) into your system prompt (or rely on root [AGENTS.md](./AGENTS.md) / [CLAUDE.md](./CLAUDE.md)).
+Default installs cleanly into `~/.gemini/config/skills`, `~/.claude/skills`, and `~/.agents/skills`. Options: `--agent antigravity|claude|agents|all`, `--project DIR`, `--uninstall`. For **ChatGPT + terminal, Windsurf, Cline**, drop [adapters/UNIVERSAL_PROMPT.md](./adapters/UNIVERSAL_PROMPT.md) into your system prompt (or use root [AGENTS.md](./AGENTS.md) / [CLAUDE.md](./CLAUDE.md)).
 
 ---
 
@@ -57,15 +66,12 @@ Options: `--agent antigravity|claude|agents|all`, `--project DIR` for a single r
 blender-programmatic-studio/
 ├── SKILL.md                                     # Core Agent Skill runbook & dual-track closed-loop protocol
 ├── AGENTS.md / CLAUDE.md                        # Root auto-discovery pointers for coding agents
-├── README.md / README_zh.md                     # English & Chinese documentation
-├── LICENSE                                      # MIT License
-├── install/
-│   ├── install.sh / install.ps1                 # One-command cross-platform, cross-agent installers
-├── assets/
-│   ├── chiba_clay_to_cycles_showcase.jpg        # 3-stage procedural Clay -> Cycles -> 135mm telephoto showcase
-│   └── chiba_clay_vs_cycles_split.jpg           # Exact matched-camera Frame 149 vs 150 split comparison
-├── adapters/
-│   └── UNIVERSAL_PROMPT.md                      # Drop-in prompt & CLI protocol for any agent
+├── README.md / README_zh.md / CHANGELOG.md      # English & Chinese docs + release history
+├── .claude-plugin/                              # Native Claude Code plugin & marketplace manifests
+├── .github/workflows/ci.yml                     # Automated GitHub Actions validation & installer CI
+├── install/install.sh & install.ps1             # One-command cross-platform, cross-agent installers
+├── assets/                                      # Chiba Port Tower & Game Prop real rendered benchmarks
+├── adapters/UNIVERSAL_PROMPT.md                 # Drop-in prompt & CLI protocol for any agent
 ├── references/
 │   ├── photoreal-modeling-architecture.md       # Spec-first scale, Macro->Meso->Micro law, behind-glass depth
 │   ├── pbr-materials-and-realism.md             # Anti-plastic PBR cookbook, multi-scale roughness/AO, IOR/albedo table
@@ -76,60 +82,57 @@ blender-programmatic-studio/
 ├── scripts/
 │   ├── blender_compat.py                        # Blender 4.2 LTS – 5.2+ shim (sky, compositor, actions, BSDF, EEVEE)
 │   ├── optix_render_utils.py                    # Multi-backend GPU activator (OPTIX/CUDA/HIP/ONEAPI/METAL/CPU) + OIDN
+│   ├── material_library.py                      # 16 one-line physical anti-plastic PBR materials (100% ORM-bake safe)
+│   ├── environment_kit.py                       # 5 weather presets, bounded volumetric fog, procedural terrain & scatter
 │   ├── cinema_rig_kit.py                        # 5 --preset photoreal scene templates, aspect framing & compositor
 │   ├── scene_auditor.py                         # Pre-render & --game-ready .blend auditor (scale, bevels, UVs, tris, PBR)
 │   ├── visual_qc_kit.py                         # Zero-dependency 3s 4-view clay QC & Cycles 1:1 native crop diagnostic
 │   ├── game_asset_pipeline.py                   # Unit scale, UV0/UV1, metallic-safe PBR->ORM bake, LODs, UCX & GLB/FBX/USD
+│   ├── cleanup_imported_mesh.py                 # Clean AI-generated/scanned .glb/.fbx/.obj into game-ready engine assets
 │   ├── resumable_seq_renderer.py                # Resumable GPU sequence renderer with PNG IEND validation & --overwrite
 │   └── delivery_audit.py                        # Still & MP4 delivery auditor (ffprobe, MAD continuity scan, storyboard)
 ├── examples/
-│   └── 01_photoreal_architectural_bay.py        # Runnable gold-standard spec-first architectural bay + blue-hour render
-└── tests/
-    └── run_smoke_test.py                        # Cross-platform one-command regression & full Blender smoke test suite
+│   ├── 01_photoreal_architectural_bay.py        # Spec-first 3-tier architectural curtain wall + blue-hour render
+│   └── 02_game_hero_prop.py                     # Hard-surface armored game supply crate using material_library.py
+└── tests/run_smoke_test.py                      # Cross-platform one-command regression & full Blender smoke test suite
 ```
 
 ---
 
-## Quickstart (3-Minute End-to-End Run)
+## Quickstart
 
-### 1. Build Gold-Standard Scene + Run Automated Audit + Clay & Cycles QC
-
-```bash
-blender -b --factory-startup --python-exit-code 1 --python examples/01_photoreal_architectural_bay.py -- \
-  --out ./build/arch_bay.blend --samples 48
-
-blender -b --factory-startup --python-exit-code 1 --python scripts/scene_auditor.py -- \
-  --blend ./build/arch_bay.blend --fail-on-error
-
-blender -b --factory-startup --python-exit-code 1 --python scripts/visual_qc_kit.py -- \
-  --blend ./build/arch_bay.blend --mode clay_4view --out ./qc/clay_4view.png
-
-blender -b --factory-startup --python-exit-code 1 --python scripts/visual_qc_kit.py -- \
-  --blend ./build/arch_bay.blend --mode cycles_crop --out ./qc/cycles_qc.png --res 1024 --samples 32
-```
-
-### 2. Export as a Game-Ready UE5 / Unity / Godot / WebGL Asset (Baked ORM + LODs + Collision)
+### 1. Build & Bake a Game-Ready Hard-Surface Hero Prop (UE5 / Unity / Godot)
 
 ```bash
+blender -b --factory-startup --python-exit-code 1 --python examples/02_game_hero_prop.py -- \
+  --out ./build/game_crate.blend --samples 64
+
+blender -b --factory-startup --python-exit-code 1 --python scripts/visual_qc_kit.py -- \
+  --blend ./build/game_crate.blend --mode clay_4view --out ./qc/crate_clay.png
+
 blender -b --factory-startup --python-exit-code 1 --python scripts/game_asset_pipeline.py -- \
-  --blend ./build/arch_bay.blend --out-blend ./build/arch_bay_game.blend \
-  --asset-name ArchBay --merge-hero --lightmap-uv --weighted-normals \
-  --bake --tex-dir ./export/textures --tex-size 2048 --normal-format opengl \
+  --blend ./build/game_crate.blend --out-blend ./build/game_crate_ready.blend \
+  --asset-name SupplyCrate --merge-hero --lightmap-uv --weighted-normals \
+  --bake --bake-emissive --tex-dir ./export/textures --tex-size 2048 --normal-format opengl \
   --lods 0.5,0.2 --collision \
-  --export-glb ./export/ArchBay.glb --export-fbx ./export/ArchBay.fbx
+  --export-glb ./export/SupplyCrate.glb --export-fbx ./export/SupplyCrate.fbx
 
 blender -b --factory-startup --python-exit-code 1 --python scripts/scene_auditor.py -- \
-  --blend ./build/arch_bay_game.blend --game-ready --fail-on-error
+  --blend ./build/game_crate_ready.blend --game-ready --fail-on-error
 ```
 
-### 3. Scaffold Any Scene Preset or Run the Full Smoke Test Suite
+### 2. Clean Up an AI-Generated or Scanned `.glb` Into a Game Asset
 
 ```bash
-# Presets: studio_product | arch_exterior | arch_interior | diorama_terrain | cinema_macro
-blender -b --factory-startup --python-exit-code 1 --python scripts/cinema_rig_kit.py -- \
-  --preset arch_exterior --out ./build/master_rig.blend --res-x 1920 --res-y 1920 --compositor
+blender -b --factory-startup --python-exit-code 1 --python scripts/cleanup_imported_mesh.py -- \
+  --input ./raw/tripo_scan.glb --asset-name HeroProp \
+  --target-height 1.2 --target-tris 15000 --reunwrap --lightmap-uv \
+  --lods 0.5,0.2 --collision --export-glb ./export/HeroProp_Clean.glb
+```
 
-# Verify everything end-to-end on your installed Blender (4.2–5.2+)
+### 3. Verify Everything End-to-End on Your Machine
+
+```bash
 python tests/run_smoke_test.py
 ```
 
@@ -137,9 +140,8 @@ python tests/run_smoke_test.py
 
 ## Ecosystem & Complementary Open-Source Projects
 
-This workflow focuses on **spec-first photorealistic modeling, architectural/product/environment look-dev, automated closed-loop QC, metallic-safe PBR->ORM baking, and cinema/game export**. It pairs cleanly with:
 - **[EL4CTEO/blender-skills](https://github.com/EL4CTEO/blender-skills)** — Broad 28-skill library great for specialized character tasks (Rigify rigging, ARKit 52 facial blendshapes, cloth/hair grooming, sculpting).
-- **[ahujasid/camera-to-blender](https://github.com/ahujasid/camera-to-blender)** — Mobile photo -> Tripo3D mesh generator for rapidly capturing intricate real-world organic props, which can then be cleaned, unwrapped, LOD-decimated, and baked through our `scripts/game_asset_pipeline.py`.
+- **[ahujasid/camera-to-blender](https://github.com/ahujasid/camera-to-blender)** — Mobile photo -> Tripo3D mesh generator for quickly capturing intricate real-world organic props, which can then be cleaned, unwrapped, LOD-decimated, and exported through our `scripts/cleanup_imported_mesh.py`.
 
 ---
 

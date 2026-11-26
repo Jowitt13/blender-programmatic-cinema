@@ -36,7 +36,7 @@ if ($Project) {
     }
 }
 
-$Items = @("SKILL.md", "README.md", "README_zh.md", "LICENSE", "AGENTS.md", "CLAUDE.md", "adapters", "assets", "examples", "references", "scripts", "tests")
+$Items = @("SKILL.md", "README.md", "README_zh.md", "LICENSE", "CHANGELOG.md", "AGENTS.md", "CLAUDE.md", "adapters", "assets", "examples", "references", "scripts", "tests")
 
 foreach ($Dst in $Targets) {
     $DstFull = [System.IO.Path]::GetFullPath($Dst)

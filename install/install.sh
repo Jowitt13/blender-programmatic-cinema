@@ -59,7 +59,7 @@ copy_skill() {
   fi
   rm -rf "$dst"
   mkdir -p "$dst"
-  for item in SKILL.md README.md README_zh.md LICENSE AGENTS.md CLAUDE.md adapters assets examples references scripts tests; do
+  for item in SKILL.md README.md README_zh.md LICENSE CHANGELOG.md AGENTS.md CLAUDE.md adapters assets examples references scripts tests; do
     if [[ -e "$REPO_ROOT/$item" ]]; then
       cp -R "$REPO_ROOT/$item" "$dst/$item"
     fi

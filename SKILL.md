@@ -29,17 +29,22 @@ Works identically with **any AI agent** that has shell access (Antigravity, Clau
 - **Cinematography, Lighting & 5 Scene Presets**: Read [references/cinematography-and-lighting-guide.md](./references/cinematography-and-lighting-guide.md) when designing cameras, world splits, blue-hour architecture, or Workbench clay breakdown intros.
 - **Blender 4.2–5.2 + Cycles + FFmpeg 8+ Pitfalls**: Read [references/blender-version-pitfalls.md](./references/blender-version-pitfalls.md) before writing compositor, sky, animation, GPU, or FFmpeg code.
 - **Aesthetic Direction & 5-Axis Self-Critique Rubric**: Read [references/aesthetic-direction-and-habits.md](./references/aesthetic-direction-and-habits.md) before inspecting QC renders or proposing revisions.
-- **Gold-Standard Runnable Example**: Inspect [examples/01_photoreal_architectural_bay.py](./examples/01_photoreal_architectural_bay.py) to see spec-first 3-tier geometry, physical PBR, and Cycles look-dev in one clean script.
+- **Gold-Standard Runnable Examples**:
+  - [examples/01_photoreal_architectural_bay.py](./examples/01_photoreal_architectural_bay.py) — Spec-first 3-tier architectural curtain wall + behind-glass interior + blue-hour look-dev.
+  - [examples/02_game_hero_prop.py](./examples/02_game_hero_prop.py) — Hard-surface game hero prop (armored industrial crate) using `material_library.py`, ready for ORM baking, LODs, `UCX_` collision & `.glb`/`.fbx` export.
 - **Universal Non-Skill Agent Adapter**: Share [adapters/UNIVERSAL_PROMPT.md](./adapters/UNIVERSAL_PROMPT.md) for agents without native `SKILL.md` discovery.
 
 ## Tooling Scripts (Zero External Dependencies Inside Blender)
 
 - [scripts/blender_compat.py](./scripts/blender_compat.py) — Cross-version compatibility shim for Blender `4.2 LTS` – `5.2+` (physical sky, compositor, actions, BSDF, EEVEE).
 - [scripts/optix_render_utils.py](./scripts/optix_render_utils.py) — Multi-backend Cycles GPU activator (`OPTIX -> CUDA -> HIP -> ONEAPI -> METAL -> CPU`) + Blackman-Harris `1.25px` filter + GPU OIDN (`ACCURATE`).
+- [scripts/material_library.py](./scripts/material_library.py) — One-line physical PBR material factory (16 anti-plastic, ORM-bake-safe materials + optional linear tint & top-facing snow dusting).
+- [scripts/environment_kit.py](./scripts/environment_kit.py) — 5 weather presets (`blue_hour`, `rainy_night`, `golden_haze`, `snow_dusting`, `overcast_nordic`), bounded volumetric fog, procedural terrain/island mesh generator, and slope/altitude-filtered instanced scatterer.
 - [scripts/cinema_rig_kit.py](./scripts/cinema_rig_kit.py) — 5 reusable `--preset` master scenes (`studio_product`, `arch_exterior`, `arch_interior`, `diorama_terrain`, `cinema_macro`), exact aspect framing, and compositor builder.
 - [scripts/scene_auditor.py](./scripts/scene_auditor.py) — Deterministic pre-render & `--game-ready` `.blend` auditor (real-world scale, sharp unbeveled boxes, albedo physicality, triangle budget, unit scale, UV maps, unbaked procedural shaders, frustum coverage).
 - [scripts/visual_qc_kit.py](./scripts/visual_qc_kit.py) — Zero-dependency (`bpy` + `numpy`) 3-second Workbench 4-view clay contact sheet (`clay_4view`) & Cycles full + `1:1` native pixel crop diagnostic (`cycles_crop`).
 - [scripts/game_asset_pipeline.py](./scripts/game_asset_pipeline.py) — Game-asset prep (unit scale, bottom-center pivot, UV0 + Lightmap UV1, Weighted Normals), metallic-safe Cycles PBR->ORM (`R=AO, G=Roughness, B=Metallic`) baker, automatic LOD1/LOD2, UE5 `UCX_` collision hulls, and `.glb`/`.fbx`/`.usdc` exporter.
+- [scripts/cleanup_imported_mesh.py](./scripts/cleanup_imported_mesh.py) — Cleanup & game-engine optimizer for external AI-generated or scanned `.glb`/`.fbx`/`.obj` meshes (Tripo3D, `camera-to-blender`, Meshy, photogrammetry): weld/fix normals, height normalization, bottom pivot, target-tri decimation, UVs, LODs, `UCX_`, and re-export.
 - [scripts/resumable_seq_renderer.py](./scripts/resumable_seq_renderer.py) — Resumable GPU sequence renderer with PNG `IEND` integrity checks, live ETA, and `--overwrite`.
 - [scripts/delivery_audit.py](./scripts/delivery_audit.py) — Final still & MP4 auditor (`ffprobe`, adjacent-frame MAD continuity scan, MP4 storyboard extraction).
 

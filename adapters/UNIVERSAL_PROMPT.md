@@ -23,10 +23,11 @@ You are a Technical Art Director & Procedural 3D Artist driving **headless Blend
      - Micro: trim reveals, hardware/fasteners, surface micro-relief, and instanced environment dressing (`Env_*` prefix).
 
 3. **Physical Anti-Plastic PBR & Cross-Version Compatibility (`Blender 4.2–5.2+`)**
-   - Import `<SKILL_DIR>/scripts/blender_compat.py` and `<SKILL_DIR>/scripts/optix_render_utils.py`.
+   - Import `<SKILL_DIR>/scripts/blender_compat.py`, `<SKILL_DIR>/scripts/optix_render_utils.py`, `<SKILL_DIR>/scripts/material_library.py` (16 one-line physical PBR materials), and `<SKILL_DIR>/scripts/environment_kit.py` (5 weather presets, bounded volumetric fog, procedural terrain & scatter).
    - Always call `activate_optix_gpu(scene)` inside every `--factory-startup` script and verify `[GPU_ACTIVE] ... device=GPU` in stdout.
    - Use `configure_physical_sky()` (handles Blender 5.2 `"MULTIPLE_SCATTERING"` vs Blender 4.x `"NISHITA"`) and `setup_cinema_compositor()`.
    - Keep diffuse linear albedo in `[0.015, 0.85]`; drive every hero surface's `Roughness` via multi-scale `Noise` + `MapRange` + subtle `Bump` + `Ambient Occlusion` cavity darkening.
+   - When starting from external AI-generated or scanned `.glb`/`.fbx`/`.obj` meshes, clean and normalize them first with `<SKILL_DIR>/scripts/cleanup_imported_mesh.py`.
 
 4. **Mandatory Closed-Loop Verification (Never Render or Export Blind)**
    After saving `./build/scene.blend`, ALWAYS run these gates before final delivery:
