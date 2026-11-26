@@ -1,59 +1,46 @@
-# Aesthetic Direction, Director's Eye & Collaboration Habits
+# Aesthetic Direction, 5-Axis Self-Critique Rubric & Collaboration Workflow
 
-This reference combines **universal cinematic craft aesthetics** (how an experienced CG director sees light, scale, material, and rhythm) with **observed user preferences and collaboration habits**. Treat aesthetic ideas as guiding judgment, not rigid dogma — always adapt them to each new film's story and mood.
+This guide distills **director-level visual judgment**, a mandatory **5-Axis Self-Critique Rubric** that keeps any AI agent from settling for mediocre first-pass renders, and clean collaboration habits.
 
 ---
 
 ## 1. Core Cinematic Aesthetic Philosophy (Director's Eye)
 
-### Scale Creates Emotion (Treat Small Things Like Architecture)
-- A small craft object shot from far away reads like a catalog thumbnail; the exact same object shot in tight macro with sculpted light reads like a monument or a landscape.
-- Give the hero subject commanding presence in the frame (~45–60% visual weight in macro showcases) unless deliberate emptiness is the core emotional statement.
-- Push close enough that **material honesty** shines: microscopic glaze crackles, chisel marks, woven fibers, meniscus curvature on water, brushed metal grain, natural patina oxidation.
-
-### Light as Sculptor, Shadow as Architecture
-- Cinema lives in the **shadow side**, not flat uniform brightness. Avoid frontal floodlights that erase depth.
-- Use directional raking key lights (`30°–55°` grazing angles) to carve relief and micro-bump, paired with a crisp cool/warm rim strip to separate silhouette from dark backdrops.
-- Keep shadows rich and velvety rather than lifting them into muddy gray. Negative space should feel intentional and weighty, not empty by accident.
-
-### Tactile Contrast Across Cuts
-- Visual rhythm comes from **physical contrast**, not just color variety. Sequence opposing tactile worlds side-by-side:
-  - Wet translucent fluid ↔ dry fibrous paper
-  - Hammered specular gold ↔ matte carved wood or stone
-  - Rigid geometric symmetry ↔ organic turbulent motion
-  - Cool restrained celadon/ink ↔ sudden warm molten sparks
-- Break up every shader with multi-scale micro-roughness and subtle color variation — never ship a sterile, uniform "CG plastic" material.
-
-### Restraint Over Spectacle
-- Luxury and museum quality come from **knowing what to remove**. Avoid cheap CG crutches: excessive bloom, neon candy saturation, gratuitous floating dust/smoke, fake lens flares, or decorative badges.
-- When a frame already has one powerful focal element (a single emerald stone eye on wet dark inkstone, or pure white calligraphy on obsidian black), stop adding decoration.
-
-### Typography as Spatial Architecture
-- Treat text as part of the composition, never a disconnected subtitle sticker. Couple type to the frame's geometry (hugging an architectural horizon, aligned cleanly to an axis, breathing gently with lens motion).
-- Choose letterforms with cultural and historical weight that resonate with the subject rather than generic default sans-serifs. Always check every character visually on a font specimen sheet before final assembly.
-- Let final endcards land in quiet, uncluttered authority — pure backdrop, strong letterform, zero visual noise.
+- **Scale Creates Emotion**: Push close enough for **material honesty** — beveled chamfers, glass mullions, glaze crackles, chisel marks, damp stone sheen, brushed metal grain, and behind-glass room depth. Give hero subjects commanding presence (`~45%–60%` frame weight) unless deliberate emptiness is the core statement.
+- **Light as Sculptor, Shadow as Architecture**: Cinema lives on the shadow side. Use grazing raking key lights (`30°–55°`) to carve relief, cool/warm rim strips to separate dark silhouettes, and rich velvety shadows rather than flat frontal floodlights.
+- **Tactile Contrast Across Surfaces & Cuts**: Pair physically opposing textures — wet clearcoat granite against matte concrete, warm behind-glass tungsten against cool blue-hour sky, specular hammered metal against dry wood or paper.
+- **Restraint Over Spectacle**: Museum and cinema quality come from knowing what to remove. Avoid candy-neon saturation, excessive bloom, gratuitous floating smoke, fake lens flares, or cluttered watermarks.
+- **Typography as Spatial Architecture**: Couple titles spatially to horizon lines or architectural grids; verify every Latin/CJK glyph visually; keep endcards quiet and uncluttered.
 
 ---
 
-## 2. Observed User Taste Inclinations (Flexible Signals)
+## 2. Mandatory 5-Axis Visual Self-Critique Rubric
 
-From past creative reviews, the user consistently gravitates toward:
-- **Strong Subject Dominance**: Prefers bold, close-up, high-presence framing over timid centered "coin/icon" framing surrounded by excessive void.
-- **Warm, Restrained Craft Authenticity**: Favors tactile, understated museum warmth (silk, aged wood, jade translucency, hand-painted porcelain, delicate lacquer, realistic water/ink optics) over garish saturation or toy-like procedural geometry.
-- **Minimalist Purity**: Values clean unified backgrounds and distraction-free endings (explicitly prefers stripping away extraneous smoke wisps or extra stamps/seals on endcards).
-- **Hidden Craft & Cultural Easter Eggs**: Enjoys subtle, high-craft storytelling layers (e.g., matching calligraphy dynasties to artifacts, rapid script evolution at the finale, exact beat-locked match-cuts) that reward viewers who pause and rewatch.
+After running [scripts/visual_qc_kit.py](../scripts/visual_qc_kit.py) (`clay_4view` and `cycles_crop`), grade the render honestly from `1–5` on every axis **before** committing final GPU render time. Any axis `< 4` requires a targeted code revision:
 
-**Anti-Patterns to Watch Out For**:
-- Stiff, toy-like procedural buildings, figurines, or complex carvings built from basic primitives (switch to museum-grade 2K/4K relief/alpha-cutout textures mounted on real 3D geometry, or pick subjects where 3D physics genuinely excels).
-- Blown-out AgX highlights or oversaturated gemstone/ceramic colors.
-- Visually disconnected titles floating far away from the subject in empty space.
+| Axis | What to Inspect Visually | Instant Red Flags (Must Fix!) |
+| :--- | :--- | :--- |
+| **1. Proportion & Silhouette** | `clay_4view` Hero + Front + Side + 3/4 Iso | Floating objects, wrong real-world scale, blocky primitive silhouette, empty skyline/background void |
+| **2. Macro-Meso-Micro Detail** | `clay_4view` + `cycles_crop` 1:1 native crops | Razor-sharp 90° edges with no bevels, paper-thin walls, missing mullions/seams/hardware, Z-fighting |
+| **3. Material Believability** | `cycles_crop` 1:1 crops + `scene_auditor.py` | Uniform CG plastic sheen, impossible white (`>0.85`) or pure black (`<0.015`) albedo, flat un-broken concrete/stone |
+| **4. Lighting & AgX Contrast** | `cycles_crop` full frame + luma telemetry | Flat frontal lighting, `clipped_white > 3%`, muddy lifted shadows, wide-`SUN` white-disc reflection on water |
+| **5. Composition & Lens Optics** | Hero camera frame | Hero `< 20%` of frame, converging tilted building verticals (forgot `shift_y`), noisy/smeared denoised mullions |
 
 ---
 
-## 3. Collaboration & Execution Habits
+## 3. Anti-"AI Slop" Editorial & Breakdown Motion Graphics
 
-- **Diagnose → Visual Options + Cost Tiers → Wait for Approval**: When addressing aesthetic weaknesses or major direction pivots, explain the root cause crisply, render a quick real-frame comparison image, present 2–3 clear options with honest time/quality cost tiers, and **wait for the user's pick** before launching heavy work.
-- **Fast QC Sheets Over Throwaway Full Renders**: Validate lookdev, exposure, and framing with fast midpoint contact sheets (1/3 res, `24–32 spp`). Once approved, jump straight to the target master resolution/fps (e.g., native 2K/60fps) instead of wasting hours on a full low-res intermediate.
-- **Non-Disruptive Live Edits**: Keep post-assembly decoupled from 3D rendering. When the user requests copy, font, or endcard tweaks while a GPU render is running, update the post-assembly script on disk without stopping the render and show a 1-second static preview frame.
-- **Clean Pause & Resume Discipline**: If asked to pause mid-render, stop the task cleanly, verify zero lingering `blender.exe` processes holding VRAM, report exact banked frame counts on disk, and resume seamlessly from the next missing frame on cue.
-- **Direct, Visual Communication**: Keep updates concise, show contact sheets and exact `ffprobe` metrics rather than walls of text, and provide publication-ready titles/captions/tags when asked.
+When assembling breakdown reels, case studies, or tutorials alongside 3D footage, strictly reject generic blue-cyan neon gradients, glowing rounded video frames, rainbow pill badges, and top progress bars. Favor a **documentary matte-obsidian aesthetic**:
+- Matte warm-charcoal film-grain backdrop (`#0a0a0c`) and full-bleed edge-to-edge footage.
+- Restrained 3-tone palette: charcoal ground + brushed metallic silver vertical gradient + muted champagne gold accents.
+- Crisp `1–2 px` silver comparison hairlines, thin silver outer + `1 px` dotted inner border cards with active/dimmed focus switching, and clean dedicated subtitle-safe bands.
+
+---
+
+## 4. Director–Agent Collaboration Workflow
+
+- **Diagnose -> Visual Options + Cost Tiers -> Wait for Approval**: When fixing major aesthetic flaws or proposing creative pivots, explain the root cause crisply, render a quick comparison frame, lay out `2–3` concrete options with honest time/quality cost tiers, and wait for user approval before heavy renders.
+- **Fast QC Gates Over Throwaway Full Renders**: Validate geometry in 3 seconds (`clay_4view`) and look-dev in ~15 seconds (`cycles_crop`). Once approved, jump straight to target delivery resolution/fps.
+- **Non-Disruptive Live Edits**: Keep post-assembly decoupled from 3D rendering so copy, typography, or wipe timing can be revised while GPU renders run.
+- **Clean Pause & Resume**: On pause requests, terminate cleanly, confirm zero orphaned `blender` processes hold VRAM, report exact banked frame counts, and resume seamlessly on cue.
+- **Evidence-Driven Updates**: Report progress concisely with contact sheets, `1:1` pixel crops, `scene_auditor.py` summaries, and `delivery_audit.py` metrics.

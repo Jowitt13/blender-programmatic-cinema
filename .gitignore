@@ -1,6 +1,19 @@
+# Python bytecode & caches
 __pycache__/
 *.py[cod]
+*$py.class
+.venv/
+
+# Blender backup, build & render outputs
 *.blend1
 *.blend2
+*.tmp
+*.log
+build/
+frames/
+qc/
+
+# OS metadata
 .DS_Store
 Thumbs.db
+Desktop.ini

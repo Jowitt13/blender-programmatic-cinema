@@ -1,76 +1,104 @@
 ---
-name: blender-programmatic-cinema
+name: blender-programmatic-studio
 description: >-
-  End-to-end programmatic 3D short-film production workflow driving Blender 5.2 LTS
-  and Cycles OptiX/CUDA GPU entirely via Python scripts. Covers rhythm/audio-driven
-  timelines, parametric master rigs, hybrid 3D physics and high-res relief craftsmanship,
-  cinematic framing and AgX lighting principles, fast visual QC gates, resumable GPU
-  sequence rendering, and decoupled typography/post-assembly. Use whenever the user wants
-  to create, direct, or iterate on a script-driven Blender Cycles 3D film, visual essay,
-  match-cut montage, product/craft showcase, or macro cinematography piece.
+  Universal, agent-agnostic workflow for ultra-detailed photorealistic 3D modeling,
+  PBR look-dev, real-time game-ready asset production (UE5/Unity/Godot/glTF), and
+  cinema rendering driven entirely through headless Blender CLI Python scripts
+  (Blender 4.2 LTS through 5.2+ with Cycles GPU OptiX/CUDA/HIP/OneAPI/Metal). Enforces
+  spec-first real-world scale, Macro-Meso-Micro 3-tier geometry, anti-plastic PBR
+  materials, automated .blend & --game-ready auditing, 3-second 4-view Workbench clay QC,
+  1:1 native pixel crop look-dev verification, metallic-safe PBR-to-ORM texture baking,
+  automatic LODs & UE5 UCX collision hulls, glTF/FBX/USD export, resumable GPU sequence
+  rendering, and final delivery auditing. Use whenever the user asks to model, shade,
+  light, bake, export game assets/environments, build clay-to-final breakdowns, or
+  render photorealistic architecture, interiors, products, terrain dioramas, or 3D short
+  films in Blender via Python scripts.
 ---
 
-# Blender Programmatic Cinema Workflow
+# Blender Programmatic Studio
 
-Direct and render cinema-grade 3D short films by driving **Blender 5.2 LTS + Cycles GPU** entirely through clean, reproducible Python scripts — paired with visual director judgment and fast decoupled post-assembly.
+Produce **ultra-detailed, photorealistic 3D models, game-ready assets/environments (UE5 / Unity / Godot / WebGL), hero stills, and cinema sequences** by driving **Blender 4.2 LTS – 5.2+ + Cycles GPU** entirely via reproducible Python scripts — powered by a mandatory **Build -> Automated Audit -> 4-View Clay QC -> Look-Dev / Bake -> Final Verification** closed loop.
 
-This workflow is **theme-agnostic and format-agnostic** (`9:16`, `16:9`, `2.39:1`, `1:1`; match-cut montage, slow macro study, product/craft hero reel, architectural light essay, or kinetic visual poetry). Treat every parameter as a creative choice serving the story, not a rigid template.
+Works identically with **any AI agent** that has shell access (Antigravity, Claude Code, Codex, Cursor, Windsurf, Gemini CLI, OpenCode, or ChatGPT + local terminal) via headless `blender -b --factory-startup --python-exit-code 1 --python ...` — **no Blender MCP required**.
 
 ## Reference Map (Load As Needed)
 
-- **Aesthetic Philosophy & Collaboration Habits**: Read [references/aesthetic-direction-and-habits.md](./references/aesthetic-direction-and-habits.md) before designing visuals, critiquing renders, or proposing revisions.
-- **Cinematography, Framing & AgX Lighting Guide**: Read [references/cinematography-and-lighting-guide.md](./references/cinematography-and-lighting-guide.md) when designing camera language, lighting splits, or applying the Horizon-Arch Macro preset.
-- **Blender 5.2 + Cycles + FFmpeg Pitfalls**: Read [references/blender52-cycles-pitfalls.md](./references/blender52-cycles-pitfalls.md) before writing geometry, compositor, animation, or FFmpeg scripts.
-- **Reusable Scripts**:
-  - [scripts/optix_render_utils.py](./scripts/optix_render_utils.py) — Mandatory Cycles OptiX/CUDA GPU activator under `--factory-startup`.
-  - [scripts/cinema_rig_kit.py](./scripts/cinema_rig_kit.py) — Configurable master rig builder + optional non-destructive Horizon-Arch Macro optical solver.
-  - [scripts/resumable_seq_renderer.py](./scripts/resumable_seq_renderer.py) — Resumable GPU sequence renderer (`native` camera or optional framing preset).
+- **Photoreal Modeling & 3-Tier Detailing**: Read [references/photoreal-modeling-architecture.md](./references/photoreal-modeling-architecture.md) *before* writing geometry scripts (spec-first sizing, Macro->Meso->Micro geometry, bevels, behind-glass interiors, hybrid modeling boundary).
+- **Physical PBR Materials & Anti-Plastic Cookbook**: Read [references/pbr-materials-and-realism.md](./references/pbr-materials-and-realism.md) *before* creating shaders (multi-scale roughness breakup, AO cavity dirt, physical IOR/albedo ranges).
+- **Real-Time Game-Asset & Environment Pipeline**: Read [references/game-asset-and-realtime-pipeline.md](./references/game-asset-and-realtime-pipeline.md) whenever targeting **Unreal Engine 5, Unity, Godot, or Three.js / WebGL** (UV0/Lightmap UV1, metallic-safe PBR->ORM baking, LODs, `UCX_` collision, glTF/FBX/USD export).
+- **Cinematography, Lighting & 5 Scene Presets**: Read [references/cinematography-and-lighting-guide.md](./references/cinematography-and-lighting-guide.md) when designing cameras, world splits, blue-hour architecture, or Workbench clay breakdown intros.
+- **Blender 4.2–5.2 + Cycles + FFmpeg 8+ Pitfalls**: Read [references/blender-version-pitfalls.md](./references/blender-version-pitfalls.md) before writing compositor, sky, animation, GPU, or FFmpeg code.
+- **Aesthetic Direction & 5-Axis Self-Critique Rubric**: Read [references/aesthetic-direction-and-habits.md](./references/aesthetic-direction-and-habits.md) before inspecting QC renders or proposing revisions.
+- **Gold-Standard Runnable Example**: Inspect [examples/01_photoreal_architectural_bay.py](./examples/01_photoreal_architectural_bay.py) to see spec-first 3-tier geometry, physical PBR, and Cycles look-dev in one clean script.
+- **Universal Non-Skill Agent Adapter**: Share [adapters/UNIVERSAL_PROMPT.md](./adapters/UNIVERSAL_PROMPT.md) for agents without native `SKILL.md` discovery.
+
+## Tooling Scripts (Zero External Dependencies Inside Blender)
+
+- [scripts/blender_compat.py](./scripts/blender_compat.py) — Cross-version compatibility shim for Blender `4.2 LTS` – `5.2+` (physical sky, compositor, actions, BSDF, EEVEE).
+- [scripts/optix_render_utils.py](./scripts/optix_render_utils.py) — Multi-backend Cycles GPU activator (`OPTIX -> CUDA -> HIP -> ONEAPI -> METAL -> CPU`) + Blackman-Harris `1.25px` filter + GPU OIDN (`ACCURATE`).
+- [scripts/cinema_rig_kit.py](./scripts/cinema_rig_kit.py) — 5 reusable `--preset` master scenes (`studio_product`, `arch_exterior`, `arch_interior`, `diorama_terrain`, `cinema_macro`), exact aspect framing, and compositor builder.
+- [scripts/scene_auditor.py](./scripts/scene_auditor.py) — Deterministic pre-render & `--game-ready` `.blend` auditor (real-world scale, sharp unbeveled boxes, albedo physicality, triangle budget, unit scale, UV maps, unbaked procedural shaders, frustum coverage).
+- [scripts/visual_qc_kit.py](./scripts/visual_qc_kit.py) — Zero-dependency (`bpy` + `numpy`) 3-second Workbench 4-view clay contact sheet (`clay_4view`) & Cycles full + `1:1` native pixel crop diagnostic (`cycles_crop`).
+- [scripts/game_asset_pipeline.py](./scripts/game_asset_pipeline.py) — Game-asset prep (unit scale, bottom-center pivot, UV0 + Lightmap UV1, Weighted Normals), metallic-safe Cycles PBR->ORM (`R=AO, G=Roughness, B=Metallic`) baker, automatic LOD1/LOD2, UE5 `UCX_` collision hulls, and `.glb`/`.fbx`/`.usdc` exporter.
+- [scripts/resumable_seq_renderer.py](./scripts/resumable_seq_renderer.py) — Resumable GPU sequence renderer with PNG `IEND` integrity checks, live ETA, and `--overwrite`.
+- [scripts/delivery_audit.py](./scripts/delivery_audit.py) — Final still & MP4 auditor (`ffprobe`, adjacent-frame MAD continuity scan, MP4 storyboard extraction).
 
 ---
 
-## Reusable Production Pipeline (7 Modular Phases)
+## Mandatory Dual-Track Closed-Loop Pipeline
 
-### Phase 1: Concept, Rhythm & Timeline Blueprint
-1. Clarify the film's core visual thesis, target aspect ratio/resolution/fps (e.g., `1440×2560 @ 60fps` or `3840×2160 @ 24/60fps`), and pacing arc.
-2. If cutting to music or a reference edit, extract lossless audio first (`ffmpeg -vn -c:a copy`) and lock exact cut boundaries into a canonical `timeline.json` (integer frame ranges, act structure, shot themes, optional titles).
-3. Every render, QC sheet, and assembly script reads from `timeline.json` as the single source of truth.
+### Stage 1: Spec-First Blueprint & Scene Archetype
+1. Lock a `SPEC` dictionary in **real-world meters (`1 BU = 1.0 m`)** before writing geometry: overall dimensions, modular grid pitch (for game kits), structural rhythm, camera lens, aspect ratio, and target track (**Cinema/Still** or **Game-Ready Engine Asset**).
+2. Scaffold from the matching archetype in [scripts/cinema_rig_kit.py](./scripts/cinema_rig_kit.py) (`studio_product`, `arch_exterior`, `arch_interior`, `diorama_terrain`, or `cinema_macro`).
+3. For beat-synced films, extract lossless audio (`ffmpeg -vn -c:a copy`) and lock frame boundaries in `timeline.json`.
 
-### Phase 2: Parametric Master Rig & World Architecture
-1. Generate a reusable `master_rig.blend` (see [scripts/cinema_rig_kit.py](./scripts/cinema_rig_kit.py)) defining shared color management (`AgX`), realistic ray-bounces, physical shutter motion blur, baseline studio lights, and alignment guides.
-2. **Decouple camera backdrop from environment reflections** via `ShaderNodeLightPath -> Is Camera Ray` so dark, colored, or minimalist backdrops stay pure while objects still catch realistic studio reflections.
-3. Keep scene assets cleanly normalized around world origin so camera language, framing, or aspect ratio can be upgraded globally without rebuilding geometry.
+### Stage 2: 3-Tier Procedural Geometry (`Macro -> Meso -> Micro`)
+1. Organize cleanly into collections (`00_CAMERAS_AND_RIG`, `01_LIGHTING`, `02_ENVIRONMENT`, `03_HERO_ASSET`) using `Env_*` for environment dressing and `Hero_*` for primary assets.
+2. **Never ship raw primitives.** Every hero form stacks all 3 tiers:
+   - **Macro**: Real-world silhouette, modular grid alignment, grounded plinth/seams (zero floating parts).
+   - **Meso**: Real wall/panel thickness, recessed apertures, beveled chamfers (`bmesh.ops.bevel` + `WeightedNormal` for game assets), mullions/frames, behind-glass interior cavities.
+   - **Micro**: Panel reveals, hardware/fasteners, surface relief, and instanced environment scatter.
+3. For complex organic props/scans, follow the hybrid boundary in [references/game-asset-and-realtime-pipeline.md](./references/game-asset-and-realtime-pipeline.md).
 
-### Phase 3: Hybrid Craftsmanship (Match Technique to Physical Truth)
-Choose the modeling approach that gives the highest tactile believability per shot rather than forcing one method everywhere:
-- **Pure 3D Simulation & Procedural Shaders**: Best where real optical/physical computation shines — fluids and ink dispersion, thin-film iridescence, liquid ripples, refractive droplets with caustics, volumetric light/fire/embers (with Cycles Compositor `Fog Glow`), mechanical gears, woven lattices, and geometric arrays.
-- **High-Res Relief/Cutout Textures + Real 3D Silhouette & Motion**: Best for intricate organic, painterly, woven, engraved, or filigree subjects where raw procedural meshes look toy-like. Combine orthographic 2K/4K textures (albedo + bump/height + alpha cutout) with real 3D beveled geometry, physical relief displacement, roughness variation, and animated 3D hero elements (rotating rings, moving tools/threads, parallax layers).
+### Stage 3: Automated Audit + 3-Second 4-View Clay QC Gate (Mandatory)
+**Never render Cycles or export game assets blind.** Run both checks right after saving `./build/scene.blend`:
+```bash
+blender -b --factory-startup --python-exit-code 1 --python scripts/scene_auditor.py -- \
+  --blend ./build/scene.blend --fail-on-error
 
-### Phase 4: Intentional Camera Language & Non-Destructive Framing
-Design camera movement and framing to maximize subject authority and emotional rhythm:
-- Pick the framing that serves the film: **Horizon-Arch Macro** (edge-to-edge monumental curvature for tactile match-cuts), **Close-Up Turntable/Orbital**, **Slow Push-In Dolly**, or **Architectural Light Study**.
-- Prefer **non-destructive framing overrides** at render time (or separate rig presets) when experimenting with framing changes so original `.blend` scenes stay clean and reversible.
-- When tightening framing inside an already-lit studio rig, prefer **telephoto focal length + lens shift (`shift_x/y`)** over physically moving the camera into the lighting zone; linearly keyframe subtle breathing zoom (`1.00× → 1.03×`) for organic life and native Cycles motion blur.
+blender -b --factory-startup --python-exit-code 1 --python scripts/visual_qc_kit.py -- \
+  --blend ./build/scene.blend --mode clay_4view --out ./qc/clay_4view.png
+```
+Visually inspect `clay_4view.png`. Fix any scale drift, floating geometry, Z-fighting, empty silhouettes, or framing flaws **before** shading or baking.
 
-### Phase 5: Fast Visual QC Gates (Never Render Blind)
-1. Before rendering full sequences, render fast midpoint frames (e.g., 1/3 resolution, `24–32 spp`) across all shots and assemble a contact sheet.
-2. Visually inspect EVERY shot and review with the user before committing multi-hour GPU compute. Audit:
-   - Subject presence and silhouette clarity.
-   - AgX highlight control (no blown whites, no flat plastic midtones, no dark subjects lost into dark backgrounds).
-   - Continuity across cuts (alignment, brightness rhythm, color harmony).
-3. When diagnosing a visual weakness or proposing major direction changes, generate a real-frame side-by-side comparison sheet, lay out **2–3 concrete options with honest time/quality cost tiers**, and wait for user approval.
+### Stage 4: Physical PBR Shading, AgX Lighting & Look-Dev QC
+1. Build anti-plastic physical PBR materials ([references/pbr-materials-and-realism.md](./references/pbr-materials-and-realism.md)): linear diffuse albedo in `[0.015, 0.85]`, multi-scale `Noise` roughness, `Bump`, `Ambient Occlusion` cavity grime, and realistic `Coat`/`IOR`.
+2. Configure `AgX`, directional sculpted lighting (grazing key + rim separation or cross-version `configure_physical_sky()` with `sun.visible_glossy = False` over water), and restrained glare via `setup_cinema_compositor()`.
+3. Run the fast Cycles look-dev + `1:1` native pixel crop check:
+```bash
+blender -b --factory-startup --python-exit-code 1 --python scripts/visual_qc_kit.py -- \
+  --blend ./build/scene.blend --mode cycles_crop --out ./qc/cycles_qc.png --res 1024 --samples 32
+```
+4. Grade `cycles_qc.png` against the 5-Axis Rubric in [references/aesthetic-direction-and-habits.md](./references/aesthetic-direction-and-habits.md). Complete at least **1 targeted refinement pass** if any axis `< 4/5`.
 
-### Phase 6: Resumable High-Resolution GPU Sequence Rendering
-1. Once lookdev and framing pass fast visual QC, skip throwaway full low-res intermediates and render directly at target delivery resolution/fps.
-2. Always render via [scripts/resumable_seq_renderer.py](./scripts/resumable_seq_renderer.py):
-   - Explicitly activates Cycles `OPTIX` (or `CUDA` fallback) inside every `--factory-startup` process.
-   - Skips existing valid PNGs (`> 10KB`) so pauses, crashes, or partial re-renders lose zero completed frames.
-   - Pre-steps physics cleanly when starting mid-timeline.
-3. **Clean Pause / Resume**: On user pause request, terminate the render cleanly, verify zero orphaned `blender.exe` processes holding VRAM, report exact banked frame counts, and resume seamlessly on command.
+### Stage 5A (Track A — Cinema / Hero Stills): Final GPU Render & Delivery Audit
+- Verify `[GPU_ACTIVE] ... device=GPU` in stdout. Render sequences via [scripts/resumable_seq_renderer.py](./scripts/resumable_seq_renderer.py) (always pass `--overwrite` after geometry/shader edits).
+- Keep raw renders text-free; composite titles, clay-to-final wipes, and audio separately.
+- Encode master MP4 (`-level 5.1` for `1920sq@60`, `-level 5.2` for `2160sq@60`, `CRF 13–14`, `-vf "noise=alls=2:allf=t"` on dark twilight skies) and audit via [scripts/delivery_audit.py](./scripts/delivery_audit.py) (`--mad --storyboard`).
 
-### Phase 7: Decoupled Post-Assembly, Typography & Delivery Audit
-1. **Never bake titles or endcards into 3D renders.** Keep raw PNG sequences text-free and composite titles, subtle fades, and audio in a fast (~15–30s) assembly script. This allows live copy, font, and endcard revisions *even while a 3D GPU render is running*, without interrupting it.
-2. **Typography Discipline**: Couple text spatially and stylistically to the imagery (matched to era, material, or graphic grid); verify every glyph on a visual specimen sheet before assembly; keep endcards clean and uncluttered.
-3. **Mandatory Final Audit**:
-   - Encode master MP4 (`libx264`, `yuv420p`, `CRF 14`, `-preset slow`, lossless `-c:a copy`).
-   - Run `ffprobe` to verify exact resolution, frame rate, frame count, bitrate, and audio sync.
-   - Extract a full-film midpoint contact sheet *directly from the final MP4* (`-fps_mode vfr`), inspect both the contact sheet and final video playback, and deliver with clickable paths.
+### Stage 5B (Track B — Real-Time Game Assets: UE5 / Unity / Godot / WebGL)
+Run [scripts/game_asset_pipeline.py](./scripts/game_asset_pipeline.py) to convert procedural Blender scenes into engine-ready assets with metallic-safe baked PBR + ORM maps, LODs, and UE5 collision hulls, then verify with `scene_auditor.py --game-ready`:
+```bash
+# Bake procedural PBR -> BaseColor + ORM (R=AO, G=Rough, B=Metal) + Normal, generate LODs & UCX collision, export GLB/FBX
+blender -b --factory-startup --python-exit-code 1 --python scripts/game_asset_pipeline.py -- \
+  --blend ./build/scene.blend --out-blend ./build/scene_game.blend \
+  --asset-name ArchBay --merge-hero --lightmap-uv --weighted-normals \
+  --bake --tex-dir ./export/textures --tex-size 2048 --normal-format opengl \
+  --lods 0.5,0.2 --collision \
+  --export-glb ./export/ArchBay.glb --export-fbx ./export/ArchBay.fbx
+
+# Final automated game-asset QA check (zero FAIL issues allowed)
+blender -b --factory-startup --python-exit-code 1 --python scripts/scene_auditor.py -- \
+  --blend ./build/scene_game.blend --game-ready --fail-on-error
+```
+*(Pass `--normal-format directx` when targeting Unreal Engine 5 FBX directly.)*
