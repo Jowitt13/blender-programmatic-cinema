@@ -37,9 +37,9 @@ flowchart LR
 Everything runs over **standard headless Blender CLI (`blender -b --factory-startup --python-exit-code 1 --python ...`)** with **zero external dependencies inside Blender's Python** (`bpy` + bundled `numpy`):
 
 ```bash
-git clone https://github.com/Jowitt13/blender-programmatic-cinema
-./blender-programmatic-cinema/install/install.sh         # macOS / Linux
-.\blender-programmatic-cinema\install\install.ps1        # Windows PowerShell
+git clone https://github.com/Jowitt13/blender-programmatic-studio
+./blender-programmatic-studio/install/install.sh         # macOS / Linux
+.\blender-programmatic-studio\install\install.ps1        # Windows PowerShell
 ```
 
 Default installs cleanly into:

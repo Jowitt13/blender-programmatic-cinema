@@ -37,9 +37,9 @@ flowchart LR
 整套工具基于 **标准无头 Blender CLI（`blender -b --factory-startup --python-exit-code 1 --python ...`）**，所有 Blender 内部脚本**零外部依赖**（仅用 `bpy` 与自带 `numpy`）：
 
 ```bash
-git clone https://github.com/Jowitt13/blender-programmatic-cinema
-./blender-programmatic-cinema/install/install.sh         # macOS / Linux
-.\blender-programmatic-cinema\install\install.ps1        # Windows PowerShell
+git clone https://github.com/Jowitt13/blender-programmatic-studio
+./blender-programmatic-studio/install/install.sh         # macOS / Linux
+.\blender-programmatic-studio\install\install.ps1        # Windows PowerShell
 ```
 
 默认自动安装到三大通用路径：
